@@ -3,8 +3,8 @@ var obj = {};
 var id;
 let x=0;
 let y=0;
-let w= 500;
-let h= 500;
+let w= 300;
+let h= 300;
 
 //Function to move the avatar
 function move(e){
@@ -32,11 +32,24 @@ function move(e){
 //Function to check nearby avatars
 function nearby() {
 
-    console.log(obj);
+    // console.log(obj);
     var distance = Math.floor(Math.sqrt(Math.pow((obj["B"][0] - obj["A"][0]),2) + Math.pow((obj["B"][1] - obj["A"][1]),2) ))
-
-    if (distance < 250) {
+    var cam= document.getElementById("cam")
+    var flag=false;
+    console.log(distance);
+    if (flag===false && distance < 250) {
         console.log("Avatar nearby turn on mic and video");
+        flag=true;
+        cam.style.display="flex";
+        cam.style.flexDirection="horizontal";
+        start();
+        console.log(flag)
+    }
+    else if (distance >= 250 || flag){
+        stop();
+        console.log("inside");
+        flag=false;
+        cam.style.display="none";
     }
 }
 
@@ -71,4 +84,32 @@ function loadCanvas(pic){
         ctx.drawImage(img2, x, y);        
         obj["B"] = [x,y];
     };
+}
+
+// function video(){
+    
+//     var vid=``
+//     document.getElementById("cam").innerHTML=vid;
+// }
+
+var stop = function () {
+    var stream = video.srcObject;
+    var tracks = stream.getTracks();
+    for (var i = 0; i < tracks.length; i++) {
+        var track = tracks[i];
+        track.stop();
+    }
+    video.srcObject = null;
+}
+var start = function () {
+    var video = document.getElementById('video'),
+        vendorUrl = window.URL || window.webkitURL;
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            }).catch(function (error) {
+                console.log("Something went wrong!");
+            });
+    }
 }
