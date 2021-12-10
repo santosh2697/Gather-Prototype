@@ -72,8 +72,8 @@ function loadCanvas(pic){
     var img2 = new Image(); 
     
     var player1=pic+'.png';
-    img1.src = player1;
-    img2.src = '8.png';
+    img2.src = player1;
+    img1.src = '8.png';
 
     //Creating new images
     img1.onload = () => { 
@@ -85,12 +85,6 @@ function loadCanvas(pic){
         obj["B"] = [x,y];
     };
 }
-
-// function video(){
-    
-//     var vid=``
-//     document.getElementById("cam").innerHTML=vid;
-// }
 
 var stop = function () {
     var stream = video.srcObject;
