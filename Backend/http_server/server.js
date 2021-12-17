@@ -2,7 +2,6 @@ var http = require('http'); // Import Node.js core module
 const fs = require('fs');
 const port = 5000
 var office = {}
-
 var server = http.createServer(function (req, res) {   //create web server
 
     if (req.method == 'POST') {
