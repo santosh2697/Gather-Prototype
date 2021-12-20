@@ -1,10 +1,11 @@
 const ws = new WebSocket(`ws://localhost:5000`);
 var client = {};
 
+
 ws.onmessage = function (event) {
 
     // Print received data from server
-    console.log(event.data);
+    // console.log(event.data);
 
     var data = JSON.parse(event.data);
     var c = document.getElementById("myCanvas");
@@ -42,7 +43,7 @@ function createAvatar(){
     
     client = {"name":name, "x":x, "y":y, "url":url}
 
-    var data = JSON.stringify({ "client": name, "payload":{"x":x, "y":y, "url":url} });
+    var data = JSON.stringify({ "action":"update", "client": name, "payload":{"x":x, "y":y, "url":url} });
     ws.send(data);
 }
 
@@ -68,7 +69,7 @@ function move(e){
 }
 
 function updateCoordinates (){
-    var data = JSON.stringify({ "client": client["name"], "payload":{"x":client["x"], "y":client["y"], "url":client["url"]} });
+    var data = JSON.stringify({ "action":"update", "client": client["name"], "payload":{"x":client["x"], "y":client["y"], "url":client["url"]} });
     ws.send(data);
 }
 

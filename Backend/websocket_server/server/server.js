@@ -31,16 +31,28 @@ var server = http.createServer(function (req, res) {
 const wss = new WebSocket.Server( {server});
 
 wss.on("connection", function (ws) {
-
+    var client;
     console.log("Client connection");
     ws.onmessage = function (event) {
         console.log(event.data);
         var data = JSON.parse(event.data);
-        office[data["client"]] = data["payload"];
+        var action = data["action"];
+        client = data["client"];
 
-        wss.clients.forEach(client => client.send(JSON.stringify(office)));
+        if (action === "update") {
+            office[data["client"]] = data["payload"];
+    
+            wss.clients.forEach(client => client.send(JSON.stringify(office)));
+    
+            console.log("updated data", office);
+        }
+    };
 
-        console.log(office);
+    ws.onclose = function () {
+        delete office[client];
+            wss.clients.forEach(client => client.send(JSON.stringify(office)));
+    
+            console.log("deleted one client", office);
     };
 });
 
