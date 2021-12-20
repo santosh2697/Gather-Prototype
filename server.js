@@ -9,10 +9,10 @@ var office = {};
 var server = http.createServer(function (req, res) {  
     
     if (req.method == 'GET'){
-        console.log('GET');
-        console.log(req.url);
+        // console.log('GET');
+        // console.log(req.url);
         
-        fs.readFile(".."+req.url,function(error,data){
+        fs.readFile("."+req.url,function(error,data){
             if(error){
                 res.writeHead(404);
                 res.write('Error: File not found');
@@ -34,7 +34,7 @@ wss.on("connection", function (ws) {
     var client;
     console.log("Client connection");
     ws.onmessage = function (event) {
-        console.log(event.data);
+        // console.log(event.data);
         var data = JSON.parse(event.data);
         var action = data["action"];
         client = data["client"];
@@ -44,7 +44,7 @@ wss.on("connection", function (ws) {
     
             wss.clients.forEach(client => client.send(JSON.stringify(office)));
     
-            console.log("updated data", office);
+            // console.log("updated data", office);
         }
     };
 
@@ -52,7 +52,7 @@ wss.on("connection", function (ws) {
         delete office[client];
             wss.clients.forEach(client => client.send(JSON.stringify(office)));
     
-            console.log("deleted one client", office);
+            // console.log("deleted one client", office);
     };
 });
 
