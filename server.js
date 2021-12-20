@@ -9,8 +9,8 @@ var office = {};
 var server = http.createServer(function (req, res) {  
     
     if (req.method == 'GET'){
-        // console.log('GET');
-        // console.log(req.url);
+        console.log('GET');
+        console.log(req.url);
         
         fs.readFile("."+req.url,function(error,data){
             if(error){
